@@ -59,7 +59,7 @@ __dirname,
 "timeline"
 )
 const chatPath =
-path.join(__dirname,"chat.json")
+path.join(__dirname,"chat_archive.json")
 
 
 const roomsPath =
