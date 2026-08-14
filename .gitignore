@@ -1,0 +1,34 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+backend/.env
+
+# Build output
+dist/
+build/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Runtime data
+backend/chat.json
+backend/memory.json
+backend/rooms.json
+backend/room_memory/
+backend/sessions/
+backend/summaries/
+backend/timeline/

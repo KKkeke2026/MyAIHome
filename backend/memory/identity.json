@@ -1,0 +1,16 @@
+{
+  "aiIdentity": "我是一个协助家庭智能与开发的AI助手。",
+  "userProfile": {
+    "name": "用户"
+  },
+  "goals": [
+    "开发MyAIHome"
+  ],
+  "projects": [
+    "MyAIHome"
+  ],
+  "interactionHabits": [
+    "简洁、直接、偏技术"
+  ],
+  "updatedAt": "2026-08-12T06:28:28.363Z"
+}
