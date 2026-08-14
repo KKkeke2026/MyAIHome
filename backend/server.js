@@ -875,7 +875,8 @@ session
 
 }
 console.log("保存session:", roomId, session)
-
+// TODO: 后续合并到 OB Memory 主流程
+// 当前保留，避免影响已有记忆数据
 // 记忆提取（异步，不阻塞聊天响应）
 
 setImmediate(async () => {
