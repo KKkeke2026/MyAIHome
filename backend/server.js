@@ -7,7 +7,6 @@ const cors = require("cors")
 const Anthropic = require("@anthropic-ai/sdk")
 
 const config = require("./config")
-const memoryAI = require("./memoryAI")
 const memoryManager = require("./memoryManager")
 const summaryManager = require("./summaryManager")
 const recallManager = require("./recallManager")
@@ -878,66 +877,6 @@ console.log("保存session:", roomId, session)
 // TODO: 后续合并到 OB Memory 主流程
 // 当前保留，避免影响已有记忆数据
 // 记忆提取（异步，不阻塞聊天响应）
-
-setImmediate(async () => {
-  try {
-    const aiMemory = await memoryAI(message)
-    const combinedText = `${message}\n${String(fullReply || "").trim()}`.trim()
-
-    if (aiMemory && aiMemory !== "NONE") {
-      let memoryObject
-
-      console.log("准备解析记忆:", aiMemory)
-
-      try {
-        memoryObject = JSON.parse(aiMemory)
-      } catch (e) {
-        memoryObject = {
-          text: aiMemory,
-          type: "general",
-          level: "normal",
-          importance: 3,
-          tags: [],
-        }
-      }
-
-      memoryManager.saveMemory(memoryPath, memoryObject)
-
-      let eventData = { events: [] }
-      try {
-        eventData = JSON.parse(fs.readFileSync(eventsPath, "utf-8"))
-      } catch (e) {}
-
-      const eventTypes = ["event", "project", "milestone"]
-      if (eventTypes.includes(memoryObject.type)) {
-        eventData.events.push({
-          id: Date.now().toString(),
-          text: memoryObject.text,
-          type: memoryObject.type,
-          createdAt: new Date().toISOString(),
-        })
-      }
-
-      fs.writeFileSync(eventsPath, JSON.stringify(eventData, null, 2), "utf-8")
-      console.log("📌 新事件保存:", memoryObject.text)
-    }
-
-    if (combinedText && combinedText.length >= 8) {
-      await memoryAdapter.remember(combinedText, {
-        memoryPath,
-        title: "MyAIHome chat memory",
-        tags: ["chat", "conversation"],
-        importance: 5,
-        source_bucket: "chat",
-        why_remembered: "聊天后长期记忆增强",
-        meaning: "用户消息与助手回复的聊天上下文",
-        test_data: false,
-      })
-    }
-  } catch (error) {
-    console.log("记忆保存失败:", error && error.message ? error.message : error)
-  }
-})
 
 res.end()
 
